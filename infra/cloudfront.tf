@@ -37,75 +37,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
-
-    # lambda_function_association {
-    #   event_type = "origin-request"
-    #   lambda_arn = aws_lambda_function.lambda_origin_request.qualified_arn
-    # }
-
-    # lambda_function_association {
-    #   event_type = "viewer-request"
-    #   lambda_arn = aws_lambda_function.lambda_viewer_request.qualified_arn
-    # }
   }
-
-  # Cache behavior with precedence 0
-  # ordered_cache_behavior {
-  #   path_pattern     = "*"
-  #   allowed_methods  = ["GET", "HEAD"]
-  #   cached_methods   = ["GET", "HEAD"]
-  #   target_origin_id = aws_s3_bucket.app.id
-
-  #   forwarded_values {
-  #     query_string = false
-  #     headers      = ["Origin"]
-
-  #     cookies {
-  #       forward           = "whitelist"
-  #       whitelisted_names = ["pr-id"]
-  #     }
-  #   }
-
-  #   min_ttl                = 0
-  #   default_ttl            = 86400
-  #   max_ttl                = 31536000
-  #   compress               = true
-  #   viewer_protocol_policy = "redirect-to-https"
-
-  #   lambda_function_association {
-  #     event_type = "origin-request"
-  #     lambda_arn = "${aws_lambda_function.lambda_origin_request.qualified_arn}"
-  #   }
-
-  #   lambda_function_association {
-  #     event_type = "viewer-request"
-  #     lambda_arn = "${aws_lambda_function.lambda_viewer_request.qualified_arn}"
-  #   }
-  # }
-
-  # Cache behavior with precedence 1
-  # ordered_cache_behavior {
-  #   path_pattern     = "/assets/*"
-  #   allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-  #   cached_methods   = ["GET", "HEAD"]
-  #   target_origin_id = aws_s3_bucket.app.id
-
-  #   forwarded_values {
-  #     query_string = false
-
-  #     cookies {
-  #       forward = "none"
-  #     }
-  #   }
-
-  #   min_ttl                = 0
-  #   default_ttl            = 3600
-  #   max_ttl                = 86400
-  #   compress               = true
-  #   viewer_protocol_policy = "redirect-to-https"
-  # }
-
-  # price_class = "PriceClass_200"
 
   restrictions {
     geo_restriction {
@@ -113,10 +45,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       locations        = ["US", "CA", "GB", "DE", "MX"]
     }
   }
-
-  # tags = {
-  #   Environment = "production"
-  # }
 
   custom_error_response {
     error_caching_min_ttl = 10
