@@ -4,8 +4,9 @@ function App() {
   return (
     <>
       <div className="flex h-screen w-screen">
-        <div>This is a PR link page</div>
-        <div className="m-auto">You can follow on here: </div>
+        <div className="m-auto">
+          <p>This is a PR link page</p>You can follow on here:{" "}
+        </div>
       </div>
       <a href="https://github.com/you">
         <img
