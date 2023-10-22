@@ -10,7 +10,6 @@ export const handler = async (event: CloudFrontRequestEvent) => {
     const subDomain = host.substring(0, host.indexOf("."));
 
     let prId;
-
     if (request.headers.cookie) {
       for (let i = 0; i < request.headers.cookie.length; i++) {
         let cookies = cookie.parse(request.headers["cookie"][i].value);
@@ -46,13 +45,11 @@ export const handler = async (event: CloudFrontRequestEvent) => {
           ]
         }
       };
-
       console.log(`connect to pr: ${prId}`);
       return response;
     }
 
     console.log(`connect to pr: ${prId}`);
   }
-
   return request;
 };
