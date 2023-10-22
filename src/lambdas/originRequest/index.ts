@@ -2,7 +2,6 @@ import { CloudFrontRequestEvent } from "aws-lambda";
 
 export const handler = async (event: CloudFrontRequestEvent) => {
   const request = event.Records[0].cf.request;
-  console.log(JSON.stringify(event.Records[0].cf));
   const headers = request.headers;
 
   const prId = headers["cookie"]

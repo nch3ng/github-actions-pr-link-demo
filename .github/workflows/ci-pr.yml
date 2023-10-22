@@ -3,11 +3,7 @@ name: CI and ship PR content
 on: [pull_request]
 
 jobs:
-  build:
-    uses: ./.github/workflows/ci.yml
-    secrets: inherit
   deploy-pr:
-    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -33,14 +29,14 @@ jobs:
       - run: npm install --force
       - run: npm run build
       - name: Push web artifacts to PR location
-        run: aws s3 sync ./build/ s3://${{ secrets.AWS_S3_BUCKET_NAME }}/pr-${{github.event.number}}
+        run: aws s3 sync ./dist/ s3://${{ secrets.AWS_S3_BUCKET_NAME }}/pr-${{github.event.number}}
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: "github-actions[bot]"
-          body-includes: Build output
+          body-includes: "Pr-link"
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v2
         with:
