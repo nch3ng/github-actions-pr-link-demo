@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <div className="flex h-screen w-screen">
-        <div className="m-auto">You can follow on here: </div>
+        <div className="m-auto">You can follow on here: test renew</div>
       </div>
       <a href="https://github.com/you">
         <img

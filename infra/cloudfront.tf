@@ -2,7 +2,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   depends_on = [
     aws_s3_bucket.app,
     data.aws_acm_certificate.app,
-    aws_cloudfront_origin_access_control.s3_app_oac
+    aws_cloudfront_origin_access_control.s3_app_oac,
+    aws_acm_certificate.pr-demo
   ]
 
   origin {
@@ -38,15 +39,15 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     default_ttl            = 3600
     max_ttl                = 86400
 
-    # lambda_function_association {
-    #   event_type = "origin-request"
-    #   lambda_arn = aws_lambda_function.lambda_origin_request.qualified_arn
-    # }
+    lambda_function_association {
+      event_type = "origin-request"
+      lambda_arn = aws_lambda_function.lambda_origin_request.qualified_arn
+    }
 
-    # lambda_function_association {
-    #   event_type = "viewer-request"
-    #   lambda_arn = aws_lambda_function.lambda_viewer_request.qualified_arn
-    # }
+    lambda_function_association {
+      event_type = "viewer-request"
+      lambda_arn = aws_lambda_function.lambda_viewer_request.qualified_arn
+    }
   }
 
   # Cache behavior with precedence 0
@@ -84,28 +85,28 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   # }
 
   # Cache behavior with precedence 1
-  # ordered_cache_behavior {
-  #   path_pattern     = "/assets/*"
-  #   allowed_methods  = ["GET", "HEAD", "OPTIONS"]
-  #   cached_methods   = ["GET", "HEAD"]
-  #   target_origin_id = aws_s3_bucket.app.id
+  ordered_cache_behavior {
+    path_pattern     = "/assets/*"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = aws_s3_bucket.app.id
 
-  #   forwarded_values {
-  #     query_string = false
+    forwarded_values {
+      query_string = false
 
-  #     cookies {
-  #       forward = "none"
-  #     }
-  #   }
+      cookies {
+        forward = "none"
+      }
+    }
 
-  #   min_ttl                = 0
-  #   default_ttl            = 3600
-  #   max_ttl                = 86400
-  #   compress               = true
-  #   viewer_protocol_policy = "redirect-to-https"
-  # }
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
+    compress               = true
+    viewer_protocol_policy = "redirect-to-https"
+  }
 
-  # price_class = "PriceClass_200"
+  price_class = "PriceClass_200"
 
   restrictions {
     geo_restriction {
