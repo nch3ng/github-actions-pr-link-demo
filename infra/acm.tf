@@ -1,15 +1,15 @@
 data "aws_acm_certificate" "app" {
-  domain   = "${var.root_domain_name}"
-  statuses = ["ISSUED"]
-  key_types = ["RSA_2048","EC_prime256v1"]
-  provider = aws.us_east_provider
+  domain    = var.root_domain_name
+  statuses  = ["ISSUED"]
+  key_types = ["RSA_2048", "EC_prime256v1"]
+  provider  = aws.us_east_provider
 }
 
 resource "aws_acm_certificate" "pr-demo" {
   provider = aws.us_east_provider
   // We want a wildcard cert so we can host subdomains later.
-  domain_name               = "pr-demo.${var.root_domain_name}"
-  validation_method         = "DNS"
+  domain_name       = "pr-demo.${var.root_domain_name}"
+  validation_method = "DNS"
 }
 
 resource "aws_acm_certificate_validation" "pr-demo" {
@@ -22,8 +22,8 @@ resource "aws_acm_certificate_validation" "pr-demo" {
 resource "aws_acm_certificate" "test" {
   provider = aws.us_east_provider
   // We want a wildcard cert so we can host subdomains later.
-  domain_name               = "test.${var.root_domain_name}"
-  validation_method         = "DNS"
+  domain_name       = "test.${var.root_domain_name}"
+  validation_method = "DNS"
 }
 
 resource "aws_acm_certificate_validation" "test" {

@@ -1,8 +1,8 @@
-data aws_route53_zone "app" {
-  name = "${var.root_domain_name}"
+data "aws_route53_zone" "app" {
+  name = var.root_domain_name
 }
 
-resource aws_route53_record "app" {
+resource "aws_route53_record" "app" {
   zone_id = data.aws_route53_zone.app.zone_id
   name    = "${var.service}.natecheng.com"
   type    = "A"
