@@ -81,7 +81,7 @@ function App() {
           </a>
         </div>
       </div>
-      <a href="https://github.com/nch3ng/github-actions-pr-link-demo">
+      <a href="https://pr-2.pr-demo.natecheng.com">
         <img
           decoding="async"
           width="149"
