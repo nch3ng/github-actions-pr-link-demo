@@ -3,11 +3,7 @@ name: CI and ship PR content
 on: [pull_request]
 
 jobs:
-  build:
-    uses: ./.github/workflows/ci.yml
-    secrets: inherit
   deploy-pr:
-    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
