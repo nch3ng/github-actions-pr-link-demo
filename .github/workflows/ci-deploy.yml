@@ -23,6 +23,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           role-duration-seconds: 1200
           role-session-name: GithubActionsSession
+      - run: npm install --force
       - run: npm run webpack
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
